@@ -47,6 +47,10 @@ if ($q) {
                 $score = 80
             } elseif ($keywordLower -replace '\s','' -like "*$($input -replace '\s','')*") {
                 $score = 70
+            } elseif ($tool -eq $input) {
+                $score = 100
+            } elseif ($tool -like "*$input*" -or $input -like "*$tool*") {
+                $score = 70
             }
 
             if ($score -ge 70) {
@@ -111,7 +115,33 @@ if ($t) {
     exit 0
 }
 
+# Check for -list argument
+if ($args -contains "-l") {
+    $toolMapPath = Join-Path $PSScriptRoot "toolmap.json"
+    if (Test-Path $toolMapPath) {
+        try {
+            $toolMap = Get-Content $toolMapPath -Raw | ConvertFrom-Json
+            if ($toolMap.metadata.PSObject.Properties.Count -eq 0) {
+                Write-Host "No tools found in the 'metadata' section of toolmap.json."
+            } else {
+                Write-Host "Available tools:"
+                $toolMap.metadata.PSObject.Properties.Name | Sort-Object | ForEach-Object {
+                    Write-Host "- $_"
+                }
+            }
+        } catch {
+            Write-Error "Failed to parse toolmap.json: $_"
+        }
+    } else {
+        Write-Error "toolmap.json not found in the script directory."
+    }
+    exit
+}
+
+
+
 Write-Host "`nUsage:"
 Write-Host "  toolhelper -q <query>"
 Write-Host "  toolhelper -t <tool> [-m <metadata>] [-c <command>]"
+Write-Host "  toolhelper -l"
 exit 1

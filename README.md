@@ -72,6 +72,14 @@ toolhelper -t git -m push -c "git push origin main"
 toolhelper -t docker -c "docker compose up -d"
 ```
 
+### List All Tools
+
+To list all tools (keys in the `commands` section):
+
+```bash
+toolhelper -l
+```
+
 ### Notes
 
 * Quoted strings are recommended when metadata or commands contain spaces
@@ -96,14 +104,28 @@ toolhelper -t docker -c "docker compose up -d"
 
 ## Output
 
-```powershell
-PS C:\Users\username> toolhelper -q push
+```bash
+toolhelper -q push
 
 Matched Tool: git
 ------------------
 git push origin main
 ```
-
+```bash
+toolhelper -l
+Available tools:
+- git
+- docker
+- kubectl
+```
+```bash
+toolhelper -t "toolhelper" -m "tool" -c "toolhelper -t <tool> [-m <metadata>] [-c <command>]"
+Created new metadata entry for: toolhelper
+Created new commands entry for: toolhelper
+Added metadata: tool
+Added command: toolhelper -t <tool> [-m <metadata>] [-c <command>]
+toolmap.json updated.
+```
 ---
 
 ## Author
