@@ -74,7 +74,7 @@ toolhelper -t docker -c "docker compose up -d"
 
 ### List All Tools
 
-To list all tools (keys in the `commands` section):
+To list all tools (keys in the `metadata` section):
 
 ```bash
 toolhelper -l
