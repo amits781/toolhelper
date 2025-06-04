@@ -94,6 +94,16 @@ toolhelper -t docker -c "docker compose up -d"
 }
 ```
 
+## Output
+
+```powershell
+PS C:\Users\amits> toolhelper -q push
+
+Matched Tool: git
+------------------
+git push origin main
+
+
 ---
 
 ## Author
